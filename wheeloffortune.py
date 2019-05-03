@@ -223,6 +223,7 @@ def main():
                     # Display results
                     gamelib.clear_screen()
                     draw_gamestate(gamestate)
+                    print('\nOh no, you have lost all your money!')
 
             # Player buys a vowel
             elif userAction == '2':
