@@ -122,7 +122,7 @@ def wheelDisplay(wheelPos):
 
 
 def balanceDisplay(balance):
-    print('$ ' + str(balance))
+    print('Balance: $ ' + str(balance))
 
 
 def check_consonant_winnings(price, consonant, word):
