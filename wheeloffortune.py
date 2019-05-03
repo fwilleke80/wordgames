@@ -5,7 +5,8 @@ import time
 import random
 from wordgamelib import wordgamelib as gamelib
 
-DEBUGMODE = True
+# Set DEBUGMODE to True to see the word
+DEBUGMODE = False
 
 ROLLPHASES = 20
 ROLLDELAY = 0.5
@@ -58,8 +59,8 @@ def default_gamestate(theWord, langCode):
 
 
 def draw_gamestate(gamestate):
-    print('Wheel of Fortune / Glücksrad 1.0 (' + gamestate['langCode'] + ')')
-    print('=====================================')
+    print('Wheel of Fortune / Glücksrad 1.0.1 (' + gamestate['langCode'] + ')')
+    print('=======================================')
     print('')
     if DEBUGMODE:
         print('DEBUG: ' + gamestate['theWord'])
@@ -165,11 +166,11 @@ def main():
 
             # Ask player what to do
             if gamestate['balance'] < VOWEL_COST:
-                promptStr = 'Do you want to guess a consonant (1) or solve (3)?'
-                promptChoices = ['1', '3', 'q']
+                promptStr = 'Do you want to guess a consonant (1), solve (3), or give up (g)?'
+                promptChoices = ['1', '3', 'g', 'q']
             else:
-                promptStr = 'Do you want to guess a consonant (1), buy a vowel (2), or solve (3)?'
-                promptChoices = ['1', '2', '3', 'q']
+                promptStr = 'Do you want to guess a consonant (1), buy a vowel (2), solve (3), or give up (g)?'
+                promptChoices = ['1', '2', '3', 'g', 'q']
 
             userAction = ''
             while userAction not in promptChoices:
@@ -182,7 +183,6 @@ def main():
                 _ = raw_input('\nPress ENTER to spin the wheel!')
 
                 # Spin the wheel, animate
-                random.seed(time.time())
                 currentRollPhases = int(ROLLPHASES * random.uniform(0.5, 1.0))
                 rollDelay = ROLLDELAY / currentRollPhases
                 for _ in range(currentRollPhases):
@@ -258,6 +258,12 @@ def main():
                 # Display results
                 gamelib.clear_screen()
                 draw_gamestate(gamestate)
+
+            # Player gives up
+            elif userAction.upper() == 'G':
+                print('\nThat is a pity. You were doing ok there!')
+                print('The word was ' + gamestate['theWord'] + ', by the way.')
+                break
 
             # Player wants to quit
             elif userAction.upper() == 'Q':
